@@ -20,22 +20,21 @@ int main()
 
     vector<int> result(n, -1);
     vector<int> q;
-    for (int i = 0; i < n; i++)
+    for (int i = n-1; i >= 0; --i)
     {
         while (!q.empty())
         {
-            //q에 있는 index들을 비교
             int top = q.back();
-            if (cnt[v[top]] < cnt[v[i]])
+            if (cnt[top] > cnt[v[i]])
             {
-                result[top] = v[i];
-                q.pop_back();
+                result[i] = top;
+                break;
             }
             else
-                break;
+                q.pop_back();
         }
 
-        q.push_back(i);
+        q.push_back(v[i]);
     }
 
     for (const int &i : result)
