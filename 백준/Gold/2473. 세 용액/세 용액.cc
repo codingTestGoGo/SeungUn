@@ -1,46 +1,45 @@
 #include <iostream>
 #include <vector>
+#include <set>
 #include <algorithm>
+#include <limits.h>
 
 using namespace std;
 
 int main()
 {
-   int n; cin >> n;
-   vector<long long> v(n);
-   for (int i = 0; i < n; i++)
-    cin >> v[i];
+    cin.tie(NULL);
+    ios::sync_with_stdio(false);
+
+    int n; cin >> n;
+    vector<int> v(n);
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
 
     sort(v.begin(), v.end());
-
-    long long min = 10000000000;
-    int resi, resa, resb;
+    
+    int r1, r2, r3; long long res = LONG_MAX;
     for (int i = 0; i < n-2; i++)
     {
-        long long total = v[i];
-        int start = i+1; int end = n-1;
+        long long cur = v[i];
+        int start = i+1, end = n-1;
         while (start < end)
         {
-            long long tempTotal = v[start] + v[end] + total;
-            if (tempTotal == 0)
+            long long total = cur + v[start] + v[end];
+            if (abs(total) < res)
             {
-                cout << v[i] << ' ' << v[start] << ' ' << v[end];
-                return 0;
+                r1 = i;
+                r2 = start;
+                r3 = end;
+                res = abs(total);
             }
 
-            if (abs(tempTotal) < abs(min))
-            {
-                min = tempTotal;
-                resi = i; resa = start; resb = end;
-                //printf("min %lld, {%lld, %lld, %lld}\n", min, v[resi], v[resa], v[resb]);
-            }
-
-            if (tempTotal > 0)
-                end--;
-            if (tempTotal < 0)
+            if (total < 0)
                 start++;
+            else
+                end--;
         }
     }
 
-    cout << v[resi] << ' ' << v[resa] << ' ' << v[resb];
+    cout << v[r1] << ' ' << v[r2] << ' ' << v[r3];
 }
