@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <set>
 #include <algorithm>
 
 using namespace std;
@@ -11,13 +12,15 @@ int main()
 
     int n; cin >> n;
     vector<int> v(n);
-    int result = 0;
-    for (int i = 0; i < n; i++) cin >> v[i];
+    for (int i = 0; i < n; i++)
+        cin >> v[i];
+
     sort(v.begin(), v.end());
 
+    int res = 0;
     for (int i = 0; i < n; i++)
     {
-        int target = v[i];
+        const int target = v[i];
         int start = 0, end = n-1;
         while (start < end)
         {
@@ -33,14 +36,13 @@ int main()
                 continue;
             }
 
-            int sum = v[start] + v[end];
+            const long long sum = v[start] + v[end];
             if (sum == target)
             {
-                result++;
+                res++;
                 break;
             }
-
-            if (sum < target)
+            else if (sum < target)
             {
                 start++;
             }
@@ -51,5 +53,5 @@ int main()
         }
     }
 
-    cout << result;
+    cout << res;
 }
